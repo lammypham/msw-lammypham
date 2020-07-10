@@ -5,10 +5,12 @@ import './App.css'
 
 function App() {
   const [data, setData] = useState({})
+
   useEffect(() => {
     const fetchUsername = async () => {
       try {
         const result = await axios.get('/login')
+
         if (result?.status === 200 && result?.data) {
           setData(result.data)
         }
@@ -18,22 +20,27 @@ function App() {
     }
 
     fetchUsername()
-  })
+  }, [])
+
+  if (!data) {
+    return <p>Loading...</p>
+  }
+
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          Learn React
-          {data.userName}
+          <span>Learn React</span>
+          <span>{data.userName}</span>
         </a>
       </header>
     </div>

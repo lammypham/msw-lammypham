@@ -1,7 +1,7 @@
 import React from 'react'
-import { render, screen, wait } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { rest } from 'msw'
-import { setupServer } from 'msw/node
+import { setupServer } from 'msw/node'
 import App from './App'
 
 const server = setupServer(
@@ -11,12 +11,13 @@ const server = setupServer(
 )
 
 beforeAll(() => server.listen())
-afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
 
 test('renders learn react link', () => {
   const { getByText } = render(<App />)
   const linkElement = getByText(/learn react/i)
+
   expect(linkElement).toBeInTheDocument()
 })
 
@@ -25,5 +26,5 @@ test('handle async', async () => {
 
   const { getByText } = screen
 
-  await wait(() => expect(getByText('John')).toBeInTheDocument())
+  await waitFor(() => expect(getByText('John')).toBeInTheDocument())
 })
